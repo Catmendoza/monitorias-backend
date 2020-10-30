@@ -12,7 +12,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Monitorias.Models;
+using Usuarios.Models;
 using Monitorias.Services;
+using Usuarios.Services;
 using Newtonsoft.Json;
 
 namespace Monitorias
@@ -35,10 +37,21 @@ namespace Monitorias
 
             services.AddSingleton<IMonitoriastoreDatabaseSettings>(sp =>
                 sp.GetRequiredService<IOptions<MonitoriastoreDatabaseSettings>>().Value);
+
+            // requires using Microsoft.Extensions.Options
+            services.Configure<UsuariostoreDatabaseSettings>(
+                Configuration.GetSection(nameof(UsuariostoreDatabaseSettings)));
+
+            services.AddSingleton<IUsuariostoreDatabaseSettings>(sp =>
+                sp.GetRequiredService<IOptions<UsuariostoreDatabaseSettings>>().Value);
+
+
             services.AddControllers()
                     .AddNewtonsoftJson(options => options.UseMemberCasing());
 
             services.AddSingleton<MonitoriaService>();
+            services.AddSingleton<UsuarioService>();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
