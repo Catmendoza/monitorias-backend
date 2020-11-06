@@ -2,7 +2,7 @@ using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 using Newtonsoft.Json;
 
-namespace Usuarios.Models
+namespace Monitorias.Models
 {
     public class Usuario
     {
@@ -19,5 +19,7 @@ namespace Usuarios.Models
         public string mail { get; set; }
 
         public string code { get; set; }
+        public string password { get; set; }
+        
     }
 }

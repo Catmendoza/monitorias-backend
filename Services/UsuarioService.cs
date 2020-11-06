@@ -1,15 +1,15 @@
 using MongoDB.Driver;
 using System.Collections.Generic;
 using System.Linq;
-using Usuarios.Models;
+using Monitorias.Models;
 
-namespace Usuarios.Services
+namespace Monitorias.Services
 {
     public class UsuarioService
     {
         private readonly IMongoCollection<Usuario> _Usuarios;
 
-        public UsuarioService(IUsuariostoreDatabaseSettings settings)
+        public UsuarioService(IMonitoriastoreDatabaseSettings settings)
         {
             var client = new MongoClient(settings.ConnectionString);
             var database = client.GetDatabase(settings.DatabaseName);
@@ -35,7 +35,7 @@ namespace Usuarios.Services
         public void Remove(Usuario UsuarioIn) =>
             _Usuarios.DeleteOne(Usuario => Usuario.Id == UsuarioIn.Id);
 
-        public void Remove(string id) => 
+        public void Remove(string id) =>
             _Usuarios.DeleteOne(Usuario => Usuario.Id == id);
     }
 }

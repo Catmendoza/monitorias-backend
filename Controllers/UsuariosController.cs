@@ -1,9 +1,9 @@
-using Usuarios.Models;
-using Usuarios.Services;
+using Monitorias.Models;
+using Monitorias.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
-namespace Usuarios.Controllers
+namespace Monitorias.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
