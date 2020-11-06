@@ -20,17 +20,31 @@ namespace Monitorias.Controllers
         public ActionResult<List<Usuario>> Get() =>
             _UsuarioService.Get();
 
-        [HttpGet("{id:length(24)}", Name = "GetUsuario")]
-        public ActionResult<Usuario> Get(string id)
+         [HttpGet("{mail}/{password}")]
+        public ActionResult<Usuario> Get(string mail, string password)
         {
-            var Usuario = _UsuarioService.Get(id);
+            var usuariosAux = _UsuarioService.Get();
+            var existe = false;
 
-            if (Usuario == null)
+            foreach (var usuarioActual in usuariosAux)
             {
-                return NotFound();
+                if (usuarioActual.mail == mail)
+                {
+                    if (password == usuarioActual.password)
+                    {
+                        existe = true;
+                    }
+                }
             }
 
-            return Usuario;
+            if (existe)
+            {
+                return Content(mail);
+            }
+            else
+            {
+                return Content("error");
+            }
         }
 
         [HttpPost]
