@@ -29,16 +29,18 @@ namespace Monitorias
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // requires using Microsoft.Extensions.Options
             services.Configure<MonitoriastoreDatabaseSettings>(
                 Configuration.GetSection(nameof(MonitoriastoreDatabaseSettings)));
 
             services.AddSingleton<IMonitoriastoreDatabaseSettings>(sp =>
                 sp.GetRequiredService<IOptions<MonitoriastoreDatabaseSettings>>().Value);
+
             services.AddControllers()
                     .AddNewtonsoftJson(options => options.UseMemberCasing());
 
             services.AddSingleton<MonitoriaService>();
+            services.AddSingleton<UsuarioService>();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
