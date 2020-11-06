@@ -56,8 +56,8 @@ namespace Monitorias.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{id:length(24)}")]
-        public IActionResult Delete(string id)
+        [HttpDelete("{id:length(24)}", Name = "DeleteMonitoria")]
+        public ActionResult<List<Monitoria>> Delete(string id)
         {
             var Monitoria = _MonitoriaService.Get(id);
 
@@ -67,8 +67,8 @@ namespace Monitorias.Controllers
             }
 
             _MonitoriaService.Remove(Monitoria.Id);
-
-            return NoContent();
+            var Monitorias = _MonitoriaService.Get();
+            return Monitorias;
         }
     }
 }
