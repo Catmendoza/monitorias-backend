@@ -40,7 +40,7 @@ namespace Monitorias
 
             services.AddSingleton<MonitoriaService>();
             services.AddSingleton<UsuarioService>();
-            
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,6 +56,7 @@ namespace Monitorias
             app.UseRouting();
 
             app.UseAuthorization();
+
 
             app.UseEndpoints(endpoints =>
             {

@@ -20,39 +20,55 @@ namespace Monitorias.Controllers
         public ActionResult<List<Usuario>> Get() =>
             _UsuarioService.Get();
 
-         [HttpGet("{mail}/{password}")]
-        public ActionResult<Usuario> Get(string mail, string password)
-        {
-            var usuariosAux = _UsuarioService.Get();
-            var existe = false;
 
-            foreach (var usuarioActual in usuariosAux)
+        [HttpGet("{id:length(24)}", Name = "GetUsuario")]
+        public ActionResult<Usuario> Get(string id)
+        {
+            var usuario = _UsuarioService.Get(id);
+
+            if (usuario == null)
             {
-                if (usuarioActual.mail == mail)
-                {
-                    if (password == usuarioActual.password)
-                    {
-                        existe = true;
-                    }
-                }
+                return NotFound();
             }
 
-            if (existe)
+            return usuario;
+        }
+
+        [HttpPost("{mail}/{password}")]
+        public ActionResult<Usuario> Auth(Usuario credentials)
+        {
+            var usuario = _UsuarioService.GetOne(credentials.mail);
+            if (usuario == null)
             {
-                return Content(mail);
+                return Ok(new { error = "correo incorrecto" });
+            }
+
+            if (usuario.password == credentials.password)
+            {
+                return Ok(new { token = usuario.Id });
             }
             else
             {
-                return Content("error");
+                return Ok(new { error = "contraseña incorrecto" });
             }
+
         }
 
         [HttpPost]
-        public ActionResult<Usuario> Create(Usuario Usuario)
+        public ActionResult Create(Usuario Usuario)
         {
-            _UsuarioService.Create(Usuario);
+            var aux = _UsuarioService.GetOne(Usuario.mail);
 
-            return CreatedAtRoute("GetUsuario", new { id = Usuario.Id.ToString() }, Usuario);
+            if (aux != null)
+            {
+                return Ok(new { error = "Ya existe el correo" });
+            }
+            else
+            {
+                _UsuarioService.Create(Usuario);
+
+                return Ok();
+            }
         }
 
         [HttpPut("{id:length(24)}")]
