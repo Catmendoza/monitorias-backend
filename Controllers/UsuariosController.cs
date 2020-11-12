@@ -34,41 +34,49 @@ namespace Monitorias.Controllers
             return usuario;
         }
 
-        [HttpPost("{mail}/{password}")]
+        [HttpPost]
+        [Route("login")]
         public ActionResult<Usuario> Auth(Usuario credentials)
         {
             var usuario = _UsuarioService.GetOne(credentials.mail);
+            var tokenAux = "";
+            var errorAux = "";
+
             if (usuario == null)
             {
-                return Ok(new { error = "correo incorrecto" });
+                errorAux = "Correo incorrecto";
             }
-
-            if (usuario.password == credentials.password)
+            else if (usuario.password != credentials.password)
             {
-                return Ok(new { token = usuario.Id });
+                errorAux = "Contraseña incorrecta";
             }
             else
             {
-                return Ok(new { error = "contraseña incorrecto" });
+
+                tokenAux = usuario.Id + "-" + usuario.mail + "-" + usuario.name;
             }
 
+            return Ok(new { token = tokenAux, error = errorAux });
         }
 
         [HttpPost]
-        public ActionResult Create(Usuario Usuario)
+        [Route("register")]
+        public ActionResult Create(Usuario usuario)
         {
-            var aux = _UsuarioService.GetOne(Usuario.mail);
+            var aux = _UsuarioService.GetOne(usuario.mail);
+            var tokenAux = "";
+            var errorAux = "";
 
             if (aux != null)
             {
-                return Ok(new { error = "Ya existe el correo" });
+                errorAux = "Ya existe el correo";
             }
             else
             {
-                _UsuarioService.Create(Usuario);
-
-                return Ok();
+                tokenAux = _UsuarioService.Create(usuario).Id;
             }
+
+            return Ok(new { token = tokenAux, error = errorAux });
         }
 
         [HttpPut("{id:length(24)}")]
