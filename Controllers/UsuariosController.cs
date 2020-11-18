@@ -20,25 +20,63 @@ namespace Monitorias.Controllers
         public ActionResult<List<Usuario>> Get() =>
             _UsuarioService.Get();
 
+
         [HttpGet("{id:length(24)}", Name = "GetUsuario")]
         public ActionResult<Usuario> Get(string id)
         {
-            var Usuario = _UsuarioService.Get(id);
+            var usuario = _UsuarioService.Get(id);
 
-            if (Usuario == null)
+            if (usuario == null)
             {
                 return NotFound();
             }
 
-            return Usuario;
+            return usuario;
         }
 
         [HttpPost]
-        public ActionResult<Usuario> Create(Usuario Usuario)
+        [Route("login")]
+        public ActionResult<Usuario> Auth(Usuario credentials)
         {
-            _UsuarioService.Create(Usuario);
+            var usuario = _UsuarioService.GetOne(credentials.mail);
+            var tokenAux = "";
+            var errorAux = "";
 
-            return CreatedAtRoute("GetUsuario", new { id = Usuario.Id.ToString() }, Usuario);
+            if (usuario == null)
+            {
+                errorAux = "Correo incorrecto";
+            }
+            else if (usuario.password != credentials.password)
+            {
+                errorAux = "Contraseña incorrecta";
+            }
+            else
+            {
+
+                tokenAux = usuario.Id + "-" + usuario.mail + "-" + usuario.name;
+            }
+
+            return Ok(new { token = tokenAux, error = errorAux });
+        }
+
+        [HttpPost]
+        [Route("register")]
+        public ActionResult Create(Usuario usuario)
+        {
+            var aux = _UsuarioService.GetOne(usuario.mail);
+            var tokenAux = "";
+            var errorAux = "";
+
+            if (aux != null)
+            {
+                errorAux = "Ya existe el correo";
+            }
+            else
+            {
+                tokenAux = _UsuarioService.Create(usuario).Id;
+            }
+
+            return Ok(new { token = tokenAux, error = errorAux });
         }
 
         [HttpPut("{id:length(24)}")]

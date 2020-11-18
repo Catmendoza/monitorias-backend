@@ -20,6 +20,9 @@ namespace Monitorias.Services
         public List<Usuario> Get() =>
             _Usuarios.Find(Usuario => true).ToList();
 
+        public Usuario GetOne(string mail) =>
+        _Usuarios.Find<Usuario>(Usuario => Usuario.mail == mail).FirstOrDefault();
+
         public Usuario Get(string id) =>
             _Usuarios.Find<Usuario>(Usuario => Usuario.Id == id).FirstOrDefault();
 
