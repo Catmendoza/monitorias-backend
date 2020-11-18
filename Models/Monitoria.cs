@@ -24,5 +24,6 @@ namespace Monitorias.Models
         public int availableQuotas { get; set; }
         public int initialQuotas { get; set; }
         public string description { get; set; }
+        public string[] students { get; set; }
     }
 }
