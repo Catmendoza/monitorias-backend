@@ -34,9 +34,9 @@ namespace Monitorias.Controllers
             return usuario;
         }
 
-        [HttpPost]
-        [Route("login")]
-        public ActionResult<Usuario> Auth(Usuario credentials)
+        [HttpPost("login") ]
+        //[Route("login")]
+        public ActionResult Auth(Usuario credentials)
         {
             var usuario = _UsuarioService.GetOne(credentials.mail);
             var tokenAux = "";
@@ -53,14 +53,14 @@ namespace Monitorias.Controllers
             else
             {
 
-                tokenAux = usuario.Id + "-" + usuario.mail + "-" + usuario.name;
+                tokenAux = usuario.Id;
             }
 
             return Ok(new { token = tokenAux, error = errorAux });
         }
 
-        [HttpPost]
-        [Route("register")]
+        [HttpPost("register")]
+        //[Route("register")]
         public ActionResult Create(Usuario usuario)
         {
             var aux = _UsuarioService.GetOne(usuario.mail);

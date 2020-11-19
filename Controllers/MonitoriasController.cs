@@ -3,6 +3,7 @@ using Monitorias.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
+
 namespace Monitorias.Controllers
 {
     [Route("api/[controller]")]
@@ -32,6 +33,27 @@ namespace Monitorias.Controllers
 
             return Monitoria;
         }
+
+        // [HttpPost("{id:length(24)}/{student:length(24)}")]
+        // public ActionResult<Monitoria> AddStudent(string id, string student)
+        // {
+           
+        //     var Monitoria = _MonitoriaService.Get(id);
+            
+ 
+        //     // List<string> list = new List<string>(Monitoria.students);
+        //     // list.Add(student);
+        //     // Monitoria.students = list.ToArray();
+        //     _MonitoriaService.Update(id, Monitoria);
+
+
+        //     if (Monitoria == null)
+        //     {
+        //         return NotFound();
+        //     }
+
+        //     return Monitoria;
+        // }
 
         [HttpPost]
         public ActionResult<Monitoria> Create(Monitoria Monitoria)

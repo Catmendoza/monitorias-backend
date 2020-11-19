@@ -23,6 +23,11 @@ namespace Monitorias.Models
         public string code { get; set; }
         [Required]
         public string password { get; set; }
+        [Required]
+        public int roll {get; set;}
+        
+
+
 
     }
 }
