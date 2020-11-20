@@ -34,26 +34,46 @@ namespace Monitorias.Controllers
             return Monitoria;
         }
 
-        // [HttpPost("{id:length(24)}/{student:length(24)}")]
-        // public ActionResult<Monitoria> AddStudent(string id, string student)
-        // {
+        [HttpPost("{id:length(24)}/{student:length(24)}")]
+        public ActionResult<List<Monitoria>> AddStudent(string id, string student)
+        {
            
-        //     var Monitoria = _MonitoriaService.Get(id);
+            var Monitorias = _MonitoriaService.Get();
+            var Monitoria = _MonitoriaService.Get(id);
             
  
-        //     // List<string> list = new List<string>(Monitoria.students);
-        //     // list.Add(student);
-        //     // Monitoria.students = list.ToArray();
-        //     _MonitoriaService.Update(id, Monitoria);
+            List<string> list = new List<string>(Monitoria.students);
+            list.Add(student);
+            Monitoria.students = list.ToArray();
+            _MonitoriaService.Update(id, Monitoria);
 
 
-        //     if (Monitoria == null)
-        //     {
-        //         return NotFound();
-        //     }
+            if (Monitoria == null)
+            {
+                return NotFound();
+            }
 
-        //     return Monitoria;
-        // }
+            return Monitorias;
+        }
+
+        [HttpPost("list/{id:length(24)}")]
+        public ActionResult<List<Monitoria>> getMonitoriasStudent(string id)
+        {
+            var Monitorias = _MonitoriaService.Get();
+            List<Monitoria> list = new List<Monitoria>();
+
+            foreach (var item in Monitorias)
+            {
+                foreach (var student in item.students)
+                {
+                    if(student == id){
+                        list.Add(item);
+                    }
+                }
+            }
+
+            return list;
+        }
 
         [HttpPost]
         public ActionResult<Monitoria> Create(Monitoria Monitoria)
