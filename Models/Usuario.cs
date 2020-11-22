@@ -26,8 +26,5 @@ namespace Monitorias.Models
         [Required]
         public int roll {get; set;}
         
-
-
-
     }
 }

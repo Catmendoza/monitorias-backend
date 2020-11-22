@@ -18,7 +18,7 @@ namespace Monitorias.Controllers
 
         [HttpGet]
         public ActionResult<List<Usuario>> Get() =>
-            _UsuarioService.Get();
+            _UsuarioService.GetUsers();
 
 
         [HttpGet("{id:length(24)}", Name = "GetUsuario")]
@@ -92,6 +92,22 @@ namespace Monitorias.Controllers
             _UsuarioService.Update(id, UsuarioIn);
 
             return NoContent();
+        }
+
+        [HttpPut("change-rol/{id:length(24)}")]
+        public ActionResult<List<Usuario>> changeRoll(string id, Usuario UsuarioIn)
+        {
+            var Usuario = _UsuarioService.Get(id);
+
+            if (Usuario == null)
+            {
+                return NotFound();
+            }
+
+            _UsuarioService.Update(id, UsuarioIn);
+
+            var Usuarios = _UsuarioService.GetUsers();    
+            return Usuarios;
         }
 
         [HttpDelete("{id:length(24)}")]

@@ -21,6 +21,10 @@ namespace Monitorias.Controllers
         public ActionResult<List<Monitoria>> Get() =>
             _MonitoriaService.Get();
 
+        [HttpGet("availables")]
+        public ActionResult<List<Monitoria>> GetAvailables() =>
+            _MonitoriaService.GetAvailables();
+
         [HttpGet("{id:length(24)}", Name = "GetMonitoria")]
         public ActionResult<Monitoria> Get(string id)
         {
@@ -33,6 +37,10 @@ namespace Monitorias.Controllers
 
             return Monitoria;
         }
+
+        [HttpGet("monitor/{id:length(24)}")]
+        public ActionResult<List<Monitoria>> GetMonitoriasMonitor(string id) =>
+            _MonitoriaService.GetMonitoriasMonitor(id);
 
         [HttpPost("{id:length(24)}/{student:length(24)}")]
         public ActionResult<List<Monitoria>> AddStudent(string id, string student)
@@ -96,6 +104,23 @@ namespace Monitorias.Controllers
             _MonitoriaService.Update(id, MonitoriaIn);
 
             return NoContent();
+        }
+        
+        [HttpGet("remove-monitor/{id:length(24)}/{idMonitor:length(24)}")]
+        public ActionResult<List<Monitoria>> removeMonitor(string id, string idMonitor)
+        {
+            var Monitoria = _MonitoriaService.Get(id);
+
+            if (Monitoria == null)
+            {
+                return NotFound();
+            }
+
+            Monitoria.monitor = "";
+
+            _MonitoriaService.Update(id, Monitoria);
+
+            return _MonitoriaService.GetMonitoriasMonitor(idMonitor);
         }
 
         [HttpDelete("{id:length(24)}", Name = "DeleteMonitoria")]

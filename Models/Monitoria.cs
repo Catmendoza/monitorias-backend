@@ -26,5 +26,6 @@ namespace Monitorias.Models
         public string description { get; set; }
 
         public string[] students { get; set; }
+        public string monitor { get; set; }
      }
 }
