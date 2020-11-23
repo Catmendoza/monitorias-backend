@@ -123,6 +123,23 @@ namespace Monitorias.Controllers
             return _MonitoriaService.GetMonitoriasMonitor(idMonitor);
         }
 
+        [HttpGet("add-monitor/{id:length(24)}/{idMonitor:length(24)}")]
+        public ActionResult<List<Monitoria>> addMonitor(string id, string idMonitor)
+        {
+            var Monitoria = _MonitoriaService.Get(id);
+
+            if (Monitoria == null)
+            {
+                return NotFound();
+            }
+
+            Monitoria.monitor = idMonitor;
+
+            _MonitoriaService.Update(id, Monitoria);
+
+            return _MonitoriaService.GetMonitoriasMonitor(idMonitor);
+        }
+
         [HttpDelete("{id:length(24)}", Name = "DeleteMonitoria")]
         public ActionResult<List<Monitoria>> Delete(string id)
         {
