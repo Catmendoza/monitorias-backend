@@ -64,7 +64,7 @@ namespace Monitorias.Controllers
             return Monitorias;
         }
 
-        [HttpPost("list/{id:length(24)}")]
+        [HttpGet("list/{id:length(24)}")]
         public ActionResult<List<Monitoria>> getMonitoriasStudent(string id)
         {
             var Monitorias = _MonitoriaService.Get();
