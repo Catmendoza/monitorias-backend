@@ -63,6 +63,28 @@ namespace Monitorias.Controllers
 
             return Monitorias;
         }
+        [HttpGet("removestudent/{id:length(24)}/{student:length(24)}")]
+        public ActionResult<List<Monitoria>> removeStudent(string id, string student)
+        {
+           
+            var Monitoria = _MonitoriaService.Get(id);
+            
+ 
+            List<string> list = new List<string>(Monitoria.students);
+            var index = list.IndexOf(student);
+            list.RemoveAt(index);
+            Monitoria.students = list.ToArray();
+
+
+            _MonitoriaService.Update(id, Monitoria);
+
+            if (Monitoria == null)
+            {
+                return NotFound();
+            }
+
+            return _MonitoriaService.Get();
+        }
 
         [HttpGet("list/{id:length(24)}")]
         public ActionResult<List<Monitoria>> getMonitoriasStudent(string id)
