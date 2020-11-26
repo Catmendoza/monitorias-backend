@@ -2,6 +2,7 @@ using Monitorias.Models;
 using Monitorias.Services;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System;
 
 namespace Monitorias.Controllers
 {
@@ -34,30 +35,7 @@ namespace Monitorias.Controllers
             return usuario;
         }
 
-        [HttpPost]
-        [Route("login")]
-        public ActionResult<Usuario> Auth(Usuario credentials)
-        {
-            var usuario = _UsuarioService.GetOne(credentials.mail);
-            var tokenAux = "";
-            var errorAux = "";
 
-            if (usuario == null)
-            {
-                errorAux = "Correo incorrecto";
-            }
-            else if (usuario.password != credentials.password)
-            {
-                errorAux = "Contraseña incorrecta";
-            }
-            else
-            {
-
-                tokenAux = usuario.Id + "-" + usuario.mail + "-" + usuario.name;
-            }
-
-            return Ok(new { token = tokenAux, error = errorAux });
-        }
 
         [HttpPost]
         [Route("register")]
@@ -78,6 +56,59 @@ namespace Monitorias.Controllers
 
             return Ok(new { token = tokenAux, error = errorAux });
         }
+
+        [HttpPost]
+        [Route("login")]
+        public ActionResult<Usuario> Auth(Usuario credentials)
+        {
+
+            var usuario = _UsuarioService.GetOne(credentials.mail);
+            var tokenAux = "";
+            var errorAux = "";
+
+            if (usuario == null)
+            {
+                errorAux = "Correo incorrecto";
+            }
+            else if (usuario.password != credentials.password)
+            {
+                errorAux = "Contraseña incorrecta";
+
+            }
+            else
+            {
+
+                tokenAux = usuario.Id + "-" + usuario.mail + "-" + usuario.name;
+            }
+
+            return Ok(new { token = tokenAux, error = errorAux });
+        }
+        /*[HttpGet("{mail}/{password}")]
+        public ActionResult<Usuario> Get(string mail, string password)
+        {
+            var usuariosAux = _UsuarioService.Get();
+            var existe = false;
+
+            foreach (var usuarioActual in usuariosAux)
+            {
+                if (usuarioActual.mail == mail)
+                {
+                    if (usuarioActual.password != password)
+                    {
+                        existe = true;
+                    }
+                }
+            }
+
+            if (existe)
+            {
+                return Content(mail);
+            }
+            else
+            {
+                return Content("error");
+            }
+        }*/
 
         [HttpPut("{id:length(24)}")]
         public IActionResult Update(string id, Usuario UsuarioIn)
