@@ -34,9 +34,9 @@ namespace Monitorias.Controllers
             return usuario;
         }
 
-        [HttpPost("login") ]
-        //[Route("login")]
-        public ActionResult Auth(Usuario credentials)
+        [HttpPost]
+        [Route("login")]
+        public ActionResult<Usuario> Auth(Usuario credentials)
         {
             var usuario = _UsuarioService.GetOne(credentials.mail);
             var tokenAux = "";
