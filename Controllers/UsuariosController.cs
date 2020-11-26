@@ -83,32 +83,8 @@ namespace Monitorias.Controllers
 
             return Ok(new { token = tokenAux, error = errorAux });
         }
-        /*[HttpGet("{mail}/{password}")]
-        public ActionResult<Usuario> Get(string mail, string password)
-        {
-            var usuariosAux = _UsuarioService.Get();
-            var existe = false;
 
-            foreach (var usuarioActual in usuariosAux)
-            {
-                if (usuarioActual.mail == mail)
-                {
-                    if (usuarioActual.password != password)
-                    {
-                        existe = true;
-                    }
-                }
-            }
 
-            if (existe)
-            {
-                return Content(mail);
-            }
-            else
-            {
-                return Content("error");
-            }
-        }*/
 
         [HttpPut("{id:length(24)}")]
         public IActionResult Update(string id, Usuario UsuarioIn)
