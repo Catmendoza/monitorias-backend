@@ -21,9 +21,7 @@ namespace Monitorias.Controllers
         public ActionResult<List<Comentario>> Get() =>
             _ComentarioService.Get();
 
-        [HttpGet("availables")]
-        public ActionResult<List<Comentario>> GetAvailables() =>
-            _ComentarioService.GetAvailables();
+
 
         [HttpGet("{id:length(24)}", Name = "GetComentario")]
         public ActionResult<Comentario> Get(string id)
@@ -60,7 +58,7 @@ namespace Monitorias.Controllers
 
             return NoContent();
         }
-        
+
         [HttpDelete("{id:length(24)}", Name = "DeleteComentario")]
         public ActionResult<List<Comentario>> Delete(string id)
         {

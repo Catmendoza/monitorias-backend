@@ -11,14 +11,9 @@ namespace Monitorias.Models
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
         [Required]
-        [BsonElement("Name")]
-        [JsonProperty("Name")]
-
-        
-        
         public string description { get; set; }
-        [Required]
-        
-        
+
+
+
     }
 }

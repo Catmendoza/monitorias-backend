@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Monitorias.Models;
 
-namespace Comentarios.Services
+namespace Monitorias.Services
 {
     public class ComentarioService
     {
@@ -14,32 +14,34 @@ namespace Comentarios.Services
             var client = new MongoClient(settings.ConnectionString);
             var database = client.GetDatabase(settings.DatabaseName);
 
-            _Comentarios = database.GetCollection<Comentario>(settings.ComentariosCollectionName);
+            _Comentario = database.GetCollection<Comentario>(settings.ComentariosCollectionName);
         }
 
         public List<Comentario> Get() =>
-            _Comentarios.Find(Comentario => true).ToList();
-        public List<Comentario> GetUsers() =>
-            _Comentarios.Find(Comentario => Comentario.Id != 1).ToList();
+            _Comentario.Find(Comentario => true).ToList();
+        /*public List<Comentario> GetComentarios() =>
+            _Comentario.Find(Comentario => Comentario.Id != 1).ToList();*/
+        public Comentario Get(string id) =>
+            _Comentario.Find<Comentario>(Comentario => Comentario.Id == id).FirstOrDefault();
 
         public Comentario GetOne(string description) =>
-        _Comentarios.Find<Comentario>(Comentario => Comentario.description == description).FirstOrDefault();
+        _Comentario.Find<Comentario>(Comentario => Comentario.description == description).FirstOrDefault();
 
-        
+
 
         public Comentario Create(Comentario Comentario)
         {
-            _Comentarios.InsertOne(Comentario);
+            _Comentario.InsertOne(Comentario);
             return Comentario;
         }
 
         public void Update(string id, Comentario ComentarioIn) =>
-            _Comentarios.ReplaceOne(Comentario => Comentario.Id == id, ComentarioIn);
+            _Comentario.ReplaceOne(Comentario => Comentario.Id == id, ComentarioIn);
 
         public void Remove(Comentario ComentarioIn) =>
-            _Comentarios.DeleteOne(Comentario => Comentario.Id == ComentarioIn.Id);
+            _Comentario.DeleteOne(Comentario => Comentario.Id == ComentarioIn.Id);
 
         public void Remove(string id) =>
-            _Comentarios.DeleteOne(Comentario => Comentario.Id == id);
+            _Comentario.DeleteOne(Comentario => Comentario.Id == id);
     }
 }
