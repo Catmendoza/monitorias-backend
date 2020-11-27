@@ -4,6 +4,11 @@
 ## Descripción del proyecto
 Este proyecto es una API hecha con web-api de dotnet la cual se encarga de recibir las peticiones http realizadas por el frontend del proyecto (https://github.com/JuandaGarcia/frontend-monitorias) el cual sirve para llevar un control de las monitorias de la Universidad Santiago de Cali. La plataforma cuenta con tres roles de usuario (administrador, usuario normal, monitor) donde el usuario administrado puede crear monitorias, editarlas o eliminarlas, también puede crear convertir usuarios en monitores y asignarles monitorias creadas. El usuario normal puede ver las monitorias que están disponibles y apuntarse a ellas, también pueden ver un horario donde aparecen las monitorias a las cuales se han apuntado.
 
+##Integrantes
+- Catalina Mendoza
+- Juan Jose Castro
+- Juan David García Rincón
+
 ## Pasos para correr el proyecto:
 1. Clonar el repositorio del proyecto ```git clone https://github.com/Catmendoza/monitorias-backend.git```
 2. Tener instalado dotnet. https://dotnet.microsoft.com/download
