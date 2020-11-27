@@ -9,6 +9,9 @@ Este proyecto es una API hecha con web-api de dotnet la cual se encarga de recib
 - Juan Jose Castro
 - Juan David García Rincón
 
+## Explicación Técnica
+![monitorias](https://firebasestorage.googleapis.com/v0/b/files-f91c4.appspot.com/o/Frame%206.png?alt=media&token=fe82f14a-75a3-4ad5-ab12-e08a9907342c)
+
 ## Pasos para correr el proyecto:
 1. Clonar el repositorio del proyecto ```git clone https://github.com/Catmendoza/monitorias-backend.git```
 2. Tener instalado dotnet. https://dotnet.microsoft.com/download
