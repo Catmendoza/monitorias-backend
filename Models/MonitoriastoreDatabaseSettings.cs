@@ -4,6 +4,7 @@ namespace Monitorias.Models
     {
         public string MonitoriasCollectionName { get; set; }
         public string UsuariosCollectionName { get; set; }
+        public string ComentariosCollectionName { get; set; }
         public string ConnectionString { get; set; }
         public string DatabaseName { get; set; }
     }
@@ -12,6 +13,7 @@ namespace Monitorias.Models
     {
         string MonitoriasCollectionName { get; set; }
         string UsuariosCollectionName { get; set; }
+        string ComentariosCollectionName { get; set; }
         string ConnectionString { get; set; }
         string DatabaseName { get; set; }
     }

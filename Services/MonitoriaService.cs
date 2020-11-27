@@ -26,7 +26,7 @@ namespace Monitorias.Services
 
         public Monitoria Get(string id) =>
             _Monitorias.Find<Monitoria>(Monitoria => Monitoria.Id == id).FirstOrDefault();
-        
+
         public Monitoria Create(Monitoria Monitoria)
         {
             _Monitorias.InsertOne(Monitoria);
