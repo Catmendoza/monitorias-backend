@@ -36,12 +36,23 @@ namespace Monitorias.Controllers
             return Comentario;
         }
 
-        [HttpPost]
-        public ActionResult<Comentario> Create(Comentario Comentario)
+        [HttpGet("bymonitoria/{id:length(24)}")]
+        public ActionResult<List<Comentario>> GetByMonitoria(string id)
         {
-            _ComentarioService.Create(Comentario);
+            var Comentarios = _ComentarioService.GetByMonitoria(id);
 
-            return CreatedAtRoute("GetComentario", new { id = Comentario.Id.ToString() }, Comentario);
+            return Comentarios;
+        }
+
+        [HttpGet("{idMonitoria:length(24)}/{description}")]
+        public ActionResult<List<Comentario>> Create(string idMonitoria, string description)
+        {
+            var newComment = new Comentario();
+            newComment.idMonitoria = idMonitoria;
+            newComment.description = description;
+            _ComentarioService.Create(newComment);
+
+            return _ComentarioService.GetByMonitoria(idMonitoria);
         }
 
         [HttpPut("{id:length(24)}")]
@@ -59,8 +70,8 @@ namespace Monitorias.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{id:length(24)}", Name = "DeleteComentario")]
-        public ActionResult<List<Comentario>> Delete(string id)
+        [HttpDelete("{id:length(24)}/{idMonitoria:length(24)}", Name = "DeleteComentario")]
+        public ActionResult<List<Comentario>> Delete(string id, string idMonitoria)
         {
             var Comentario = _ComentarioService.Get(id);
 
@@ -70,8 +81,7 @@ namespace Monitorias.Controllers
             }
 
             _ComentarioService.Remove(Comentario.Id);
-            var Comentarios = _ComentarioService.Get();
-            return Comentarios;
+            return _ComentarioService.GetByMonitoria(idMonitoria);
         }
     }
 }

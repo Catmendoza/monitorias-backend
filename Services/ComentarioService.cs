@@ -19,15 +19,13 @@ namespace Monitorias.Services
 
         public List<Comentario> Get() =>
             _Comentario.Find(Comentario => true).ToList();
-        /*public List<Comentario> GetComentarios() =>
-            _Comentario.Find(Comentario => Comentario.Id != 1).ToList();*/
+        public List<Comentario> GetByMonitoria(string id) =>
+            _Comentario.Find(Comentario => Comentario.idMonitoria == id).ToList();
         public Comentario Get(string id) =>
             _Comentario.Find<Comentario>(Comentario => Comentario.Id == id).FirstOrDefault();
 
         public Comentario GetOne(string description) =>
         _Comentario.Find<Comentario>(Comentario => Comentario.description == description).FirstOrDefault();
-
-
 
         public Comentario Create(Comentario Comentario)
         {

@@ -19,6 +19,8 @@ namespace Monitorias.Services
 
         public List<Monitoria> Get() =>
             _Monitorias.Find(Monitoria => true).ToList();
+        public List<Monitoria> GetMonitor() =>
+            _Monitorias.Find(Monitoria => Monitoria.monitor != "").ToList();
         public List<Monitoria> GetAvailables() =>
             _Monitorias.Find(Monitoria => Monitoria.monitor == "").ToList();
         public List<Monitoria> GetMonitoriasMonitor(string id) =>
