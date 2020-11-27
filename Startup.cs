@@ -40,7 +40,7 @@ namespace Monitorias
 
             services.AddSingleton<MonitoriaService>();
             services.AddSingleton<UsuarioService>();
-
+            services.AddSingleton<ComentarioService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
