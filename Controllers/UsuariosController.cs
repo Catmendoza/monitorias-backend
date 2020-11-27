@@ -12,10 +12,12 @@ namespace Monitorias.Controllers
     public class UsuariosController : ControllerBase
     {
         private readonly UsuarioService _UsuarioService;
+        private readonly MonitoriaService _MonitoriaService;
 
-        public UsuariosController(UsuarioService UsuarioService)
+        public UsuariosController(UsuarioService UsuarioService, MonitoriaService MonitoriaService)
         {
             _UsuarioService = UsuarioService;
+            _MonitoriaService = MonitoriaService;
         }
 
         [HttpGet]
@@ -128,6 +130,7 @@ namespace Monitorias.Controllers
         {
             var Usuario = _UsuarioService.Get(id);
 
+
             if (Usuario == null)
             {
                 return NotFound();
@@ -136,6 +139,16 @@ namespace Monitorias.Controllers
             _UsuarioService.Update(id, UsuarioIn);
 
             var Usuarios = _UsuarioService.GetUsers();
+
+            var MonitoriasMonitor = _MonitoriaService.GetMonitoriasMonitor(UsuarioIn.Id);
+            List<Monitoria> list = new List<Monitoria>(MonitoriasMonitor);
+            if(UsuarioIn.roll == 3) {
+                foreach (var item in list)
+                {
+                    item.monitor = "";
+                    _MonitoriaService.Update(item.Id, item);
+                }
+            }
             return Usuarios;
         }
 

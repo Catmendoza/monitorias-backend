@@ -22,8 +22,20 @@ namespace Monitorias.Controllers
             _MonitoriaService.Get();
         
         [HttpGet("availablesusers")]
-        public ActionResult<List<Monitoria>> GetMonitor() =>
-            _MonitoriaService.GetMonitor();
+        public ActionResult<List<Monitoria>> GetMonitor() {
+            var monitorias = _MonitoriaService.GetMonitor();
+            List<Monitoria> list = new List<Monitoria>(monitorias);
+            List<Monitoria> listQuotas = new List<Monitoria>();
+            foreach (var item in list)
+            {
+            List<string> listStudents = new List<string>(item.students);
+                if (listStudents.Count < item.initialQuotas)
+                {
+                    listQuotas.Add(item);
+                }
+            }
+            return listQuotas;
+        }
 
         [HttpGet("availables")]
         public ActionResult<List<Monitoria>> GetAvailables() =>
@@ -134,7 +146,7 @@ namespace Monitorias.Controllers
         public ActionResult<List<Monitoria>> removeMonitor(string id, string idMonitor)
         {
             var Monitoria = _MonitoriaService.Get(id);
-
+            
             if (Monitoria == null)
             {
                 return NotFound();
