@@ -24,7 +24,6 @@ namespace Monitorias.Models
         [Required(ErrorMessage = "La cedula es requerido")]
         public string code { get; set; }
         [Required(ErrorMessage = "La contraseña es requerido")]
-        [StringLength(8, ErrorMessage = "La contraseña tiene que tener maximo 8 caracteres.")]
         public string password { get; set; }
 
         public int roll { get; set; }
