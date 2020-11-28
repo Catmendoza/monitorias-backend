@@ -11,10 +11,12 @@ namespace Monitorias.Controllers
     public class MonitoriasController : ControllerBase
     {
         private readonly MonitoriaService _MonitoriaService;
+        private readonly UsuarioService _UsuarioService;
 
-        public MonitoriasController(MonitoriaService MonitoriaService)
+        public MonitoriasController(MonitoriaService MonitoriaService, UsuarioService UsuarioService)
         {
             _MonitoriaService = MonitoriaService;
+            _UsuarioService = UsuarioService;
         }
 
         [HttpGet]
@@ -174,6 +176,33 @@ namespace Monitorias.Controllers
             _MonitoriaService.Update(id, Monitoria);
 
             return _MonitoriaService.GetMonitoriasMonitor(idMonitor);
+        }
+
+        public class usuariosMonitoria
+        {
+            string name {get;set;}
+            string career {get;set;}
+
+        }
+
+        [HttpGet("getStudents/{id:length(24)}")]
+        public ActionResult<List<object>> getStudents(string id)
+        {
+            var Monitoria = _MonitoriaService.Get(id);
+            List<string> list = new List<string>(Monitoria.students);
+            List<object> lista = new List<object>();
+
+            foreach (var item in list)
+            {
+                var usuario = _UsuarioService.Get(item);
+                var user = new {name = usuario.name, career = usuario.career};
+                lista.Add(user);
+
+            }
+
+            
+
+            return lista;
         }
 
         [HttpDelete("{id:length(24)}", Name = "DeleteMonitoria")]
